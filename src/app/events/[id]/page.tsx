@@ -1,29 +1,21 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
 import { Event } from "@/types/Event";
 import getSingleEvent from "@/db/query/getSingleEvent";
-import { useState, useEffect, use } from "react";
-import Loading from "./loading";
 
-export default function EventPage({
+export default async function EventPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }) {
-  const { id } = use(params);
-  const [event, setEvent] = useState<Event | null>(null);
+  const { id } = params;
 
-  useEffect(() => {
-    async function getEvent() {
-      const data: Event = await getSingleEvent(id);
-      setEvent(data);
-    }
-    getEvent();
-  }, [id]);
+  // Server component: can await directly
+  const event: Event = await getSingleEvent(id);
 
-  if (!event) return <Loading />;
+  if (!event) {
+    return <p>Event not found.</p>;
+  }
 
   return (
     <div className="min-h-screen py-16 px-4">
@@ -56,6 +48,7 @@ export default function EventPage({
             {event.description}
           </p>
 
+          {/* Book Button & Price */}
           <div className="flex items-center justify-between mt-6">
             <Link
               href={`/events/checkout/${event.id}`}
@@ -63,6 +56,7 @@ export default function EventPage({
             >
               Book Ticket
             </Link>
+
             <span className="text-gray-900 dark:text-gray-100 font-bold text-lg">
               {event.price} tk
             </span>
