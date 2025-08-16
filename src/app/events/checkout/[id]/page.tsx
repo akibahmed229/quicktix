@@ -7,6 +7,7 @@ import bookTickets from "@/db/query/bookTickets";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/db";
 import CheckoutLoading from "./loading";
+import { Event } from "@/types/Event";
 
 export default function Checkout({
   params,
@@ -17,7 +18,7 @@ export default function Checkout({
   const router = useRouter();
   const [tickets, setTickets] = useState<number>(1);
   const [loading, setLoading] = useState(false);
-  const [event, setEvent] = useState<any>(null);
+  const [event, setEvent] = useState<Event | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
 
   // Fetch event data
@@ -105,7 +106,7 @@ export default function Checkout({
             {/* Ticket selection */}
             <div className="flex items-center justify-between mb-4">
               <span className="text-gray-800 dark:text-gray-200">
-                {event.title}
+                {!event.title}
               </span>
               <select
                 value={tickets}
@@ -133,7 +134,7 @@ export default function Checkout({
                 Subtotal
               </span>
               <span className="text-gray-800 dark:text-gray-200 font-medium">
-                {event.price * tickets} tk
+                {event.price ?? 0 * tickets} tk
               </span>
             </div>
 

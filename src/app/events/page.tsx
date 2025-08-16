@@ -1,11 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import getAllEvents from "@/db/query/getAllEvents";
-import { List } from "postcss/lib/list";
 import { Event } from "@/types/Event";
 
 export default async function EventSection() {
-  const events: List<Event> = await getAllEvents();
+  const events = await getAllEvents();
 
   return (
     <section className="py-16 min-h-screen">

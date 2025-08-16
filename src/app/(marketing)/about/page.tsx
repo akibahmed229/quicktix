@@ -56,8 +56,8 @@ export default function About() {
               cutting-edge solutions and unmatched service.
             </p>
             <p className="text-gray-600 dark:text-gray-300">
-              Every step of our journey has been shaped by our clients' trust
-              and our team's relentless drive to innovate.
+              Every step of our journey has been shaped by our clients&apos;
+              trust and our team&apos;s relentless drive to innovate.
             </p>
           </div>
         </div>

@@ -1,10 +1,9 @@
-import { Event } from "@/app/types/Event";
 import { supabase } from "..";
 
-export default async function getSingleEvent(id) {
+export default async function getSingleEvent(id: string) {
   try {
     const { data, error } = await supabase
-      .from<Event>("events")
+      .from("events")
       .select("*")
       .eq("id", id)
       .single();

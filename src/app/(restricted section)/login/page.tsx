@@ -14,13 +14,13 @@ export default function LoginPage() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const result = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
-    if (error) {
-      setMessage(error.message);
+    if (result.error) {
+      setMessage(result.error.message);
     } else {
       setMessage("Login successful!");
       window.location.href = "/events"; // redirect

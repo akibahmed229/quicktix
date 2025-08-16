@@ -9,6 +9,7 @@ import { supabase } from "@/db";
 import UserCard from "./UserCard";
 import { useRouter } from "next/navigation";
 import getUserRole from "@/db/query/getUserRole";
+import type { Session } from "@supabase/supabase-js";
 
 const MenuIcon = dynamic(() => import("lucide-react").then((m) => m.Menu), {
   ssr: false,
@@ -16,7 +17,7 @@ const MenuIcon = dynamic(() => import("lucide-react").then((m) => m.Menu), {
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [session, setSession] = useState(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [userRole, setUserRole] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
@@ -47,10 +48,8 @@ export const Header = () => {
         } = await supabase.auth.getSession();
         setSession(session);
 
-        if (session?.user) {
-          const role = await getUserRole(session.user.id);
-          setUserRole(role);
-        }
+        const role = await getUserRole();
+        setUserRole(role);
       } catch (error) {
         console.warn("No session available:", error);
         setSession(null);
