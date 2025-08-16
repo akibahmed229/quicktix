@@ -8,15 +8,15 @@ import { useEffect, useState } from "react";
 import Loading from "./loading";
 
 export default function EventSection() {
-  const [events, setEvents] = useState(null);
+  const [events, setEvents] = useState<Event[] | null | undefined>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchEvents() {
       setLoading(true);
       try {
-        const events = await getAllEvents();
-        setEvents(events);
+        const events: Event[] | null | undefined = await getAllEvents();
+        setEvents(events!);
       } catch (error) {
         console.error("Error fetching events:", error);
       } finally {
