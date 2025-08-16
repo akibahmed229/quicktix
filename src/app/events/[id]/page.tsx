@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Event } from "@/types/Event";
 import getSingleEvent from "@/db/query/getSingleEvent";
 import { useState, useEffect, use } from "react";
+import Loading from "./loading";
 
 export default function EventPage({
   params,
@@ -22,13 +23,7 @@ export default function EventPage({
     getEvent();
   }, [id]);
 
-  if (!event) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-500 dark:text-gray-400">Loading event...</p>
-      </div>
-    );
-  }
+  if (!event) return <Loading />;
 
   return (
     <div className="min-h-screen py-16 px-4">
