@@ -1,10 +1,33 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import getAllEvents from "@/db/query/getAllEvents";
 import { Event } from "@/types/Event";
+import { useEffect, useState } from "react";
+import Loading from "./loading";
 
-export default async function EventSection() {
-  const events = await getAllEvents();
+export default function EventSection() {
+  const [events, setEvents] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    async function fetchEvents() {
+      setLoading(true);
+      try {
+        const events = await getAllEvents();
+        setEvents(events);
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchEvents();
+  }, []);
+
+  if (loading) return <Loading />;
 
   return (
     <section className="py-16 min-h-screen">

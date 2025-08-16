@@ -34,6 +34,7 @@ export default function EventPage({
           alt={event.title}
           width={800}
           height={600}
+          unoptimized
           className="w-full h-96 object-cover"
         />
 
