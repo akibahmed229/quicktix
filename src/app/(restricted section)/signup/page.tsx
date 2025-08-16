@@ -22,10 +22,12 @@ export default function SignupPage() {
     if (error) {
       setMessage(error.message);
     } else {
-      // Optionally store display name in your "users" table
-      if (data.user?.id) {
+      // store users data in table
+      if (data.user) {
         await supabase.from("users").insert({
-          name,
+          id: data.user.id,
+          name: name,
+          email: data.user.email,
         });
       }
       setMessage("Signup successful! Please check your email.");
